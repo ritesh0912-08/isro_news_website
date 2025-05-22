@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISRO Missions - News Portal</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/isro-logo-white.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="glow-header">
+        <div class="container">
+            <div class="logo">
+                <img src="/images/isro-logo.png" alt="ISRO Logo">
+                <h1>ISRO <span>Missions</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/mission.html" class="active">Missions</a></li>
+                    <li><a href="/launches.html">Launches</a></li>
+                    <li><a href="/research.html">Research</a></li>
+                    <li><a href="/admin">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mission-page">
+        <section class="mission-hero">
+            <div class="hero-content">
+                <h2>ISRO Space Missions</h2>
+                <p class="subtitle">Exploring the final frontier</p>
+                <div class="glow-line"></div>
+            </div>
+        </section>
+
+        <section class="mission-filters glow-card">
+            <h3><i class="fas fa-filter"></i> Filter Missions</h3>
+            <div class="filter-options">
+                <div class="filter-group">
+                    <label for="mission-type">Mission Type</label>
+                    <select id="mission-type">
+                        <option value="all">All Missions</option>
+                        <option value="satellite">Satellite</option>
+                        <option value="planetary">Planetary</option>
+                        <option value="launch-vehicle">Launch Vehicle</option>
+                        <option value="technology">Technology</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="mission-status">Status</label>
+                    <select id="mission-status">
+                        <option value="all">All Statuses</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="ongoing">Ongoing</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="mission-year">Year</label>
+                    <select id="mission-year">
+                        <option value="all">All Years</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                    </select>
+                </div>
+                <button id="reset-filters" class="glow-button">Reset Filters</button>
+            </div>
+        </section>
+
+        <section class="mission-grid" id="missionContainer">
+            <!-- Mission cards will be loaded here by JavaScript -->
+        </section>
+
+        <section class="mission-timeline">
+            <h3><i class="fas fa-history"></i> ISRO Mission Timeline</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2023</div>
+                    <div class="timeline-content glow-card">
+                        <h4>Chandrayaan-3</h4>
+                        <p>India's successful lunar landing mission</p>
+                        <span class="timeline-status completed">Completed</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2022</div>
+                    <div class="timeline-content glow-card">
+                        <h4>SSLV-D1</h4>
+                        <p>Small Satellite Launch Vehicle debut</p>
+                        <span class="timeline-status completed">Completed</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2021</div>
+                    <div class="timeline-content glow-card">
+                        <h4>Gaganyaan Tests</h4>
+                        <p>Human spaceflight program preparations</p>
+                        <span class="timeline-status ongoing">Ongoing</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2020</div>
+                    <div class="timeline-content glow-card">
+                        <h4>EOS-01</h4>
+                        <p>Earth observation satellite</p>
+                        <span class="timeline-status completed">Completed</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2019</div>
+                    <div class="timeline-content glow-card">
+                        <h4>Chandrayaan-2</h4>
+                        <p>Lunar exploration mission</p>
+                        <span class="timeline-status completed">Completed</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="glow-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="/images/isro-logo-white.png" alt="ISRO Logo">
+                    <h3>Indian Space Research Organisation</h3>
+                </div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="/about.html">About ISRO</a></li>
+                        <li><a href="/mission.html">Missions</a></li>
+                        <li><a href="/careers.html">Careers</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@isroofficial5866"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; <span id="currentYear"></span> ISRO News Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/mission.js"></script>
+</body>
+</html>

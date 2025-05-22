@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - ISRO Admin</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/isro-logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="admin-body">
+    <header class="glow-header">
+        <div class="container">
+            <div class="logo">
+                <img src="/images/isro-logo.png" alt="ISRO Logo">
+                <h1>ISRO <span>Admin</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    
+                    <li><a href="/admin">News</a></li>
+                    <li><a href="/admin/user.html" class="active">Users</a></li>
+                    <li><a href="/admin/settings">Settings</a></li>
+                    <li><a href="/">View Site</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <section class="admin-sidebar">
+            <ul>
+                
+                <li><a href="/admin"><i class="fas fa-newspaper"></i> News</a></li>
+                <li class="active"><a href="/admin/user.html"><i class="fas fa-users"></i> Users</a></li>
+                <li><a href="/admin/analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="/admin/settings"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </section>
+
+        <section class="admin-content">
+            <div class="admin-toolbar">
+                <h2><i class="fas fa-users"></i> User Management</h2>
+                <div class="toolbar-actions">
+                    <button id="addUserBtn" class="glow-button"><i class="fas fa-plus"></i> Add User</button>
+                    <div class="search-box">
+                        <input type="text" placeholder="Search users..." id="userSearch">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-form-container" id="userFormContainer" style="display: none;">
+                <form id="userForm">
+                    <input type="hidden" id="userId">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="username">Username*</label>
+                            <input type="text" id="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email*</label>
+                            <input type="email" id="email" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="password">Password*</label>
+                            <input type="password" id="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password*</label>
+                            <input type="password" id="confirmPassword" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="role">Role*</label>
+                            <select id="role" required>
+                                <option value="admin">Administrator</option>
+                                <option value="editor">Editor</option>
+                                <option value="viewer">Viewer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="suspended">Suspended</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="glow-button">Save User</button>
+                        <button type="button" id="cancelUserBtn" class="glow-button cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="user-list">
+                <div class="list-header">
+                    <div class="header-item" style="flex: 2;">User</div>
+                    <div class="header-item">Role</div>
+                    <div class="header-item">Status</div>
+                    <div class="header-item">Last Active</div>
+                    <div class="header-item">Actions</div>
+                </div>
+                <div class="list-body" id="userList">
+                    <!-- User list will be populated by JavaScript -->
+                </div>
+                <div class="list-footer">
+                    <div class="pagination-info">
+                        Showing <span id="startItem">1</span>-<span id="endItem">10</span> of <span id="totalItems">32</span> users
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="prevPage"><i class="fas fa-chevron-left"></i></button>
+                        <span class="page-numbers" id="pageNumbers"></span>
+                        <button class="pagination-btn" id="nextPage"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/admin-user.js"></script>
+</body>
+</html>

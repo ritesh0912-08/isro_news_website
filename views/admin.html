@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISRO News Admin</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/isro-logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="admin-body">
+    <header class="glow-header">
+        <div class="container">
+            <div class="logo">
+                <img src="/images/isro-logo.png" alt="ISRO Logo">
+                <h1>ISRO <span>Admin</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">View Site</a></li>
+                    <li><a href="#" class="active">Dashboard</a></li>
+                    <li><a href="/admin/login"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <section class="admin-sidebar">
+            <ul>
+                <li class="active"><a href="#"><i class="fas fa-newspaper"></i> News</a></li>
+                <li><a href="/admin/user.html"><i class="fas fa-users"></i> Users</a></li>
+                <li><a href="/admin/Analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="/admin/settings"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </section>
+
+        <section class="admin-content">
+            <div class="admin-toolbar">
+                <h2><i class="fas fa-newspaper"></i> News Management</h2>
+                <button id="addNewsBtn" class="glow-button"><i class="fas fa-plus"></i> Add News</button>
+            </div>
+
+            <div class="news-form-container" id="newsFormContainer" style="display: none;">
+                <form id="newsForm">
+                    <input type="hidden" id="newsId">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Content</label>
+                        <textarea id="content" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageUrl">Image URL</label>
+                        <input type="url" id="imageUrl">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" required>
+                            <option value="Launch">Launch</option>
+                            <option value="Research">Research</option>
+                            <option value="Achievement">Achievement</option>
+                            <option value="Collaboration">Collaboration</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="isBreaking">
+                        <label for="isBreaking">Breaking News</label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="glow-button">Save</button>
+                        <button type="button" id="cancelBtn" class="glow-button cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="news-list" id="newsList">
+                <!-- Filled by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>
