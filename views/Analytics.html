@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - ISRO Admin</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/isro-logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="admin-body">
+    <header class="glow-header">
+        <div class="container">
+            <div class="logo">
+                <img src="/images/isro-logo.png" alt="ISRO Logo">
+                <h1>ISRO <span>Analytics</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    
+                    <li><a href="/admin/">News</a></li>
+                    <li><a href="/admin/analytics.html" class="active">Analytics</a></li>
+                    <li><a href="/admin/settings">Settings</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <section class="admin-sidebar">
+            <ul>
+                
+                <li><a href="/admin"><i class="fas fa-newspaper"></i> News</a></li>
+                <li><a href="/admin/user.html"><i class="fas fa-users"></i> Users</a></li>
+                <li class="active"><a href="/admin/analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                
+                <li><a href="/admin/settings"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </section>
+
+        <section class="admin-content">
+            <div class="analytics-header">
+                <h2><i class="fas fa-chart-line"></i> Portal Analytics</h2>
+                <div class="date-range">
+                    <select id="timeRange">
+                        <option value="7">Last 7 Days</option>
+                        <option value="30" selected>Last 30 Days</option>
+                        <option value="90">Last 90 Days</option>
+                        <option value="365">Last Year</option>
+                        <option value="custom">Custom Range</option>
+                    </select>
+                    <div id="customRange" style="display: none;">
+                        <input type="date" id="startDate">
+                        <span>to</span>
+                        <input type="date" id="endDate">
+                        <button id="applyDateRange" class="glow-button">Apply</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analytics-grid">
+                <!-- Summary Cards -->
+                <div class="summary-card glow-card">
+                    <div class="summary-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="summary-content">
+                        <div class="summary-value" id="totalViews">24,589</div>
+                        <div class="summary-label">Total Views</div>
+                        <div class="summary-change positive">
+                            <i class="fas fa-arrow-up"></i> 12.5% from last period
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-card glow-card">
+                    <div class="summary-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="summary-content">
+                        <div class="summary-value" id="uniqueVisitors">8,742</div>
+                        <div class="summary-label">Unique Visitors</div>
+                        <div class="summary-change positive">
+                            <i class="fas fa-arrow-up"></i> 8.3% from last period
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-card glow-card">
+                    <div class="summary-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="summary-content">
+                        <div class="summary-value" id="avgTime">3:42</div>
+                        <div class="summary-label">Avg. Time on Site</div>
+                        <div class="summary-change negative">
+                            <i class="fas fa-arrow-down"></i> 2.1% from last period
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-card glow-card">
+                    <div class="summary-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="summary-content">
+                        <div class="summary-value" id="topStory">Chandrayaan-3</div>
+                        <div class="summary-label">Top Story</div>
+                        <div class="summary-change">
+                            5,892 views
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Charts -->
+                <div class="chart-card glow-card">
+                    <h3><i class="fas fa-chart-bar"></i> Traffic Overview</h3>
+                    <canvas id="trafficChart"></canvas>
+                </div>
+
+                <div class="chart-card glow-card">
+                    <h3><i class="fas fa-map-marked-alt"></i> Visitor Locations</h3>
+                    <canvas id="locationChart"></canvas>
+                </div>
+
+                <div class="chart-card glow-card">
+                    <h3><i class="fas fa-mobile-alt"></i> Device Distribution</h3>
+                    <canvas id="deviceChart"></canvas>
+                </div>
+
+                <div class="chart-card glow-card">
+                    <h3><i class="fas fa-calendar-alt"></i> Daily Visitors</h3>
+                    <canvas id="dailyVisitorsChart"></canvas>
+                </div>
+
+                <!-- Data Tables -->
+                <div class="table-card glow-card">
+                    <h3><i class="fas fa-list-ol"></i> Top Pages</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Page</th>
+                                    <th>Views</th>
+                                    <th>Unique Visitors</th>
+                                    <th>Avg. Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody id="topPagesTable">
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="table-card glow-card">
+                    <h3><i class="fas fa-external-link-alt"></i> Referral Sources</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Source</th>
+                                    <th>Visitors</th>
+                                    <th>% of Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="referralTable">
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/Analytics.js"></script>
+</body>
+</html>

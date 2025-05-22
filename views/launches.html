@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISRO Launches - News Portal</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/isro-logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="glow-header">
+        <div class="container">
+            <div class="logo">
+                <img src="/images/isro-logo.png" alt="ISRO Logo">
+                <h1>ISRO <span>Launches</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/mission.html">Missions</a></li>
+                    <li><a href="/launches.html" class="active">Launches</a></li>
+                    <li><a href="/research.html">Research</a></li>
+                    <li><a href="/admin">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container launches-page">
+        <section class="launches-hero">
+            <div class="hero-content">
+                <h2>ISRO Launch Schedule</h2>
+                <p class="subtitle">Tracking India's journey to the stars</p>
+                <div class="glow-line"></div>
+            </div>
+        </section>
+
+        <section class="launch-filters glow-card">
+            <h3><i class="fas fa-rocket"></i> Filter Launches</h3>
+            <div class="filter-options">
+                <div class="filter-group">
+                    <label for="launch-vehicle">Launch Vehicle</label>
+                    <select id="launch-vehicle">
+                        <option value="all">All Vehicles</option>
+                        <option value="pslv">PSLV</option>
+                        <option value="gslv">GSLV</option>
+                        <option value="gslv-mk3">GSLV Mk III</option>
+                        <option value="sslv">SSLV</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="launch-status">Status</label>
+                    <select id="launch-status">
+                        <option value="all">All Statuses</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="success">Successful</option>
+                        <option value="failure">Failed</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="launch-year">Year</label>
+                    <select id="launch-year">
+                        <option value="all">All Years</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                    </select>
+                </div>
+                <button id="reset-filters" class="glow-button">Reset Filters</button>
+            </div>
+        </section>
+
+        <section class="launch-countdown" id="nextLaunch">
+            <!-- Next launch countdown will be loaded here by JavaScript -->
+        </section>
+
+        <section class="launch-grid" id="launchContainer">
+            <!-- Launch cards will be loaded here by JavaScript -->
+        </section>
+
+        <section class="launch-stats glow-card">
+            <h3><i class="fas fa-chart-pie"></i> Launch Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalLaunches">0</div>
+                    <div class="stat-label">Total Launches</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="successRate">0%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="satellitesLaunched">0</div>
+                    <div class="stat-label">Satellites Launched</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="yearsActive">0</div>
+                    <div class="stat-label">Years Active</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="launch-history">
+            <h3><i class="fas fa-history"></i> Launch Vehicle History</h3>
+            <div class="vehicle-tabs">
+                <button class="tab-btn active" data-vehicle="pslv">PSLV</button>
+                <button class="tab-btn" data-vehicle="gslv">GSLV</button>
+                <button class="tab-btn" data-vehicle="gslv-mk3">GSLV Mk III</button>
+                <button class="tab-btn" data-vehicle="sslv">SSLV</button>
+            </div>
+            <div class="vehicle-history" id="vehicleHistory">
+                <!-- Vehicle history will be loaded here by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="glow-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="/images/isro-logo-white.png" alt="ISRO Logo">
+                    <h3>Indian Space Research Organisation</h3>
+                </div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="/about.html">About ISRO</a></li>
+                        <li><a href="/mission.html">Missions</a></li>
+                        <li><a href="/launches.html">Launches</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; <span id="currentYear"></span> ISRO News Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/launches.js"></script>
+</body>
+</html>

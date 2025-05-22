@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISRO News - Admin Settings</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/isro-logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="admin-body">
+    <header class="glow-header">
+        <div class="container">
+            <div class="logo">
+                <img src="/images/isro-logo.png" alt="ISRO Logo">
+                <h1>ISRO <span>Admin Settings</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/admin">Dashboard</a></li>
+                    <li><a href="#" class="active">Settings</a></li>
+                    <li><a href="/">View Site</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <section class="admin-sidebar">
+            <ul>
+                <li><a href="/admin"><i class="fas fa-newspaper"></i> News</a></li>
+                <li><a href="/admin/user.html"><i class="fas fa-users"></i> Users</a></li>
+                <li><a href="/admin/analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li class="active"><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </section>
+
+        <section class="admin-content">
+            <div class="admin-toolbar">
+                <h2><i class="fas fa-cog"></i> System Settings</h2>
+            </div>
+
+            <div class="settings-section">
+                <h3><i class="fas fa-globe"></i> Website Settings</h3>
+                <form id="websiteSettings">
+                    <div class="form-group">
+                        <label for="siteTitle">Site Title</label>
+                        <input type="text" id="siteTitle" value="ISRO News Portal">
+                    </div>
+                    <div class="form-group">
+                        <label for="siteDescription">Site Description</label>
+                        <textarea id="siteDescription">Official news portal of Indian Space Research Organisation</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="siteLogo">Logo URL</label>
+                        <input type="url" id="siteLogo" value="/images/isro-logo.png">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="glow-button">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="settings-section">
+                <h3><i class="fas fa-user-shield"></i> Security Settings</h3>
+                <form id="securitySettings">
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="requireHTTPS" checked>
+                        <label for="requireHTTPS">Require HTTPS for admin panel</label>
+                    </div>
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="twoFactorAuth">
+                        <label for="twoFactorAuth">Enable Two-Factor Authentication</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="sessionTimeout">Session Timeout (minutes)</label>
+                        <input type="number" id="sessionTimeout" min="5" max="1440" value="480">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="glow-button">Update Security</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="settings-section danger-zone">
+                <h3><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+                <div class="danger-actions">
+                    <button id="clearCacheBtn" class="glow-button cancel">
+                        <i class="fas fa-broom"></i> Clear Cache
+                    </button>
+                    <button id="resetSettingsBtn" class="glow-button cancel">
+                        <i class="fas fa-undo"></i> Reset to Defaults
+                    </button>
+                    <button id="exportDataBtn" class="glow-button">
+                        <i class="fas fa-file-export"></i> Export Data
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/settings.js"></script>
+</body>
+</html>
