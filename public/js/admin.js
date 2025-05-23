@@ -118,15 +118,43 @@ window.editNewsItem = function(id) {
 window.deleteNewsItem = function(id) {
     if (confirm('Are you sure you want to delete this news item?')) {
         fetch(`/admin/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                // Include CSRF token if needed
+                // 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            credentials: 'include' // Important for sessions/cookies
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message) {
-                alert(data.message);
-                loadNewsItems();
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw err; });
             }
+            return response.json();
         })
-        .catch(error => console.error('Error:', error));
+        .then(data => {
+            // Show success notification
+            showNotification(data.message || 'News deleted successfully');
+            
+            // Refresh the news list
+            loadNewsItems();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification(error.message || 'Failed to delete news', 'error');
+        });
     }
 };
+
+// Helper function to show notifications (add this if you don't have it)
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.classList.add('fade-out');
+        setTimeout(() => notification.remove(), 500);
+    }, 3000);
+}
