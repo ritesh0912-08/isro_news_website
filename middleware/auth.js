@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
+const jwt = require('jsonwebtoken');
+const User = require('../models/User.js');
 
 // Make sure your auth middleware is properly checking tokens
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
     try {
         const token = req.cookies.token;
         if (!token) {
@@ -26,11 +26,11 @@ const auth = (req, res, next) => {
     }
 };
 
-const adminOnly = (req, res, next) => {
+const adminOnly = async (req, res, next) => {
     if (!req.user || req.user.role !== 'admin') {
         return res.status(403).json({ message: 'Access denied. Admin privileges required.' });
     }
     next();
 };
 
-export { auth, adminOnly };
+module.exports = { auth, adminOnly };

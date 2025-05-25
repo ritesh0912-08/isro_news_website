@@ -1,6 +1,6 @@
-import express from 'express';
-import Contact from '../models/contact.js';
-import nodemailer from 'nodemailer';
+const express = require('express');
+const Contact = require('../models/contact.js');
+const nodemailer = require('nodemailer');
 
 const router = express.Router();
 
@@ -40,4 +40,4 @@ router.post('/', async (req, res) => {
     }
 });
 
-export default router;
+module.exports = router;

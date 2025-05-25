@@ -1,6 +1,5 @@
-import express from 'express';
-import News from '../models/news.js';
-
+const express = require('express');
+const News = require('../models/news.js');
 const router = express.Router();
 
 // Get all news
@@ -34,4 +33,4 @@ router.get('/breaking', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

@@ -1,17 +1,14 @@
-import express from 'express';
-import jwt from 'jsonwebtoken';
-import path from 'path';
-import cookieParser from 'cookie-parser';
-import mongoose from 'mongoose';
-import { fileURLToPath } from 'url';
-import News from '../models/news.js';
-import User from '../models/User.js';
-import Contact from '../models/contact.js';
-import { auth, adminOnly } from '../middleware/auth.js';
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
+const News = require('../models/news.js');
+const User = require('../models/User.js');
+const Contact = require('../models/contact.js');
+const { auth, adminOnly } = require('../middleware/auth.js');
 
 const router = express.Router();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 router.use(cookieParser());
 router.use((req, res, next) => {
@@ -43,7 +40,6 @@ router.post('/login', async (req, res) => {
     }
 });
 
-
 router.get('/messages', auth, adminOnly, async (req, res) => {
   try {
       const messages = await Contact.find().sort({ createdAt: -1 });
@@ -56,13 +52,6 @@ router.get('/messages', auth, adminOnly, async (req, res) => {
 router.get('/api/messages', auth, adminOnly, async (req, res) => {
   const messages = await Contact.find().sort({ createdAt: -1 });
   res.json(messages);
-});
-
-
-// In your admin.js routes
-router.get('/messages', auth, adminOnly, async (req, res) => {
-  const messages = await Contact.find().sort({ createdAt: -1 });
-  res.render('messages', { messages }); // Or res.json(messages)
 });
 
 // Settings route
@@ -173,4 +162,4 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-export default router;
+module.exports = router;

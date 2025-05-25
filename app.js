@@ -1,21 +1,17 @@
-import 'dotenv/config';
-import express from 'express';
-import mongoose from 'mongoose';
-import path from 'path';
-import helmet from 'helmet';
-import morgan from 'morgan';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import { fileURLToPath } from 'url';
-import newsRouter from './routes/news.js';
-import adminRouter from './routes/admin.js';
-import mainRouter from './routes/main.js';
-import contactRouter from './routes/contact.js';
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const path = require('path');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const newsRouter = require('./routes/news.js');
+const adminRouter = require('./routes/admin.js');
+const mainRouter = require('./routes/main.js');
+const contactRouter = require('./routes/contact.js');
 // const messagesRouter = require('./routes/messages'); // Uncomment and fix if needed
 // const { auth, adminOnly } = require('./middleware/auth'); // Uncomment and fix if needed
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 
