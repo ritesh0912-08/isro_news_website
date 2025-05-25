@@ -33,4 +33,8 @@ const newsSchema = new mongoose.Schema({
   }
 });
 
+
+// In your News model file
+console.log('News model loaded successfully');
+
 module.exports = mongoose.model('News', newsSchema);

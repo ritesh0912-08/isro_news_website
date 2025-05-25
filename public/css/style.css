@@ -2977,3 +2977,22 @@ tr:hover td {
     from { opacity: 1; }
     to { opacity: 0; }
 }
+
+.news-item-actions button.delete {
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.news-item-actions button.delete:hover {
+    color: var(--danger-color);
+}
+
+.notification.error {
+    background-color: rgba(220, 53, 69, 0.9);
+    border-left: 4px solid #dc3545;
+}
+
+/* Add this if not already present */
+:root {
+    --danger-color: #dc3545;
+}

@@ -32,3 +32,12 @@ async function createAdminUser() {
     process.exit(1);
   }
 }
+
+// Add this to your Express app setup
+app.use((req, res, next) => {
+  res.setHeader(
+      'Content-Security-Policy',
+      "script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'"
+  );
+  next();
+});
