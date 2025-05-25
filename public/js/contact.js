@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contactForm');
     
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         // Get form values
@@ -18,14 +18,31 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // In a real app, you would send this to your server
-        console.log('Form submitted:', formData);
-        
-        // Show success message
-        showNotification('Your message has been sent successfully!');
-        
-        // Reset form
-        contactForm.reset();
+        try {
+            // Send data to server
+            const response = await fetch('http://localhost:3000/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            
+            // Show success message
+            showNotification(result.message || 'Your message has been sent successfully!');
+            
+            // Reset form
+            contactForm.reset();
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('Failed to send message. Please try again later.', 'error');
+        }
     });
     
     function showNotification(message, type = 'success') {

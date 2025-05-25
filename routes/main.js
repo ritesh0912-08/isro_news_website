@@ -1,7 +1,11 @@
 // In routes/main.js
-const express = require('express');
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 const router = express.Router();
-const path = require('path');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 router.get('/about.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../views', 'about.html'));
@@ -11,4 +15,5 @@ router.get('/about.html', (req, res) => {
 router.get('/ppolicy.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../views', 'ppolicy.html'));
 });
-module.exports = router;
+
+export default router;

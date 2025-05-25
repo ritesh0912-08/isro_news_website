@@ -1,21 +1,32 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const path = require('path');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
-const newsRouter = require('./routes/news');
-const adminRouter = require('./routes/admin');
-const mainRouter = require('./routes/main');
+import 'dotenv/config';
+import express from 'express';
+import mongoose from 'mongoose';
+import path from 'path';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import { fileURLToPath } from 'url';
+import newsRouter from './routes/news.js';
+import adminRouter from './routes/admin.js';
+import mainRouter from './routes/main.js';
+import contactRouter from './routes/contact.js';
+// const messagesRouter = require('./routes/messages'); // Uncomment and fix if needed
+// const { auth, adminOnly } = require('./middleware/auth'); // Uncomment and fix if needed
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-// In app.js
-const cors = require('cors');
+
+// CORS configuration
 app.use(cors({
-  origin: 'http://your-frontend-domain.com',
-  credentials: true
+    origin: process.env.NODE_ENV === 'production' 
+        ? 'http://your-frontend-domain.com' 
+        : 'http://localhost:3000',
+    credentials: true
 }));
+
 // Database connection
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -25,43 +36,28 @@ mongoose.connect(process.env.MONGODB_URI, {
 .catch(err => console.error('MongoDB connection error:', err));
 
 // Middleware
-// Replace both helmet() calls with this single configuration:
 app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-        "img-src": [
-          "'self'",
-          "data:",
-          "https://encrypted-tbn0.gstatic.com",
-          "https://etvbharatimages.akamaized.net",
-          "https://www.google.com",
-          "https://*.google.com",
-          "https://*.googleusercontent.com",
-          "https://*.gstatic.com",
-          "https://*.facebook.com"
-        ]
+        "img-src": ["'self'", "data:", "*"]  // Allow images from any source
       }
     }
   })
 );
-
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use('/admin', adminRouter);
 
 // Routes
-app.use('/admin', adminRouter);
-app.use('/admin', (req, res, next) => {
-  console.log(`Incoming ${req.method} request for: ${req.originalUrl}`);
-  next();
-});
 app.use('/api/news', newsRouter);
+app.use('/api/contact', contactRouter);
+app.use('/admin', adminRouter);
 app.use('/', mainRouter);
+// app.use('/admin/messages', auth, adminOnly, messagesRouter); // Uncomment and fix if needed
 
 // HTML routes
 app.get('/', (req, res) => {

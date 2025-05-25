@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 
 // Make sure your auth middleware is properly checking tokens
 const auth = (req, res, next) => {
@@ -33,4 +33,4 @@ const adminOnly = (req, res, next) => {
     next();
 };
 
-module.exports = { auth, adminOnly };
+export { auth, adminOnly };

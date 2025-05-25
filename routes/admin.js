@@ -1,12 +1,17 @@
-const express = require('express');
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import mongoose from 'mongoose';
+import { fileURLToPath } from 'url';
+import News from '../models/news.js';
+import User from '../models/User.js';
+import Contact from '../models/contact.js';
+import { auth, adminOnly } from '../middleware/auth.js';
+
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
-const News = require('../models/news');
-const User = require('../models/User');
-const { auth, adminOnly } = require('../middleware/auth');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 router.use(cookieParser());
 router.use((req, res, next) => {
@@ -36,6 +41,28 @@ router.post('/login', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Server error' });
     }
+});
+
+
+router.get('/messages', auth, adminOnly, async (req, res) => {
+  try {
+      const messages = await Contact.find().sort({ createdAt: -1 });
+      res.sendFile(path.join(__dirname, '../views/messages.html'));
+  } catch (error) {
+      res.status(500).json({ error: 'Server error' });
+  }
+});
+
+router.get('/api/messages', auth, adminOnly, async (req, res) => {
+  const messages = await Contact.find().sort({ createdAt: -1 });
+  res.json(messages);
+});
+
+
+// In your admin.js routes
+router.get('/messages', auth, adminOnly, async (req, res) => {
+  const messages = await Contact.find().sort({ createdAt: -1 });
+  res.render('messages', { messages }); // Or res.json(messages)
 });
 
 // Settings route
@@ -146,4 +173,4 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
