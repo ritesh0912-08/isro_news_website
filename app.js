@@ -51,6 +51,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// Serve static files
+app.use('/admin', express.static('views/admin'));
+
 // Routes
 app.use('/api/news', newsRouter);
 app.use('/api/contact', contactRouter);
@@ -96,8 +99,12 @@ app.get('/news/:id', (req, res) => {
 });
 
 // Admin routes
+app.get('/admin/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'admin', 'login.html'));
+});
+
 app.get('/admin/Logout', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'login.html'));
+  res.sendFile(path.join(__dirname, 'views', 'admin', 'login.html'));
 });
 
 app.get('/admin/settings', (req, res) => {
