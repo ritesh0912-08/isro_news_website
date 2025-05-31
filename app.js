@@ -10,8 +10,8 @@ const newsRouter = require('./routes/news.js');
 const adminRouter = require('./routes/admin.js');
 const mainRouter = require('./routes/main.js');
 const contactRouter = require('./routes/contact.js');
+const { auth, adminOnly } = require('./middleware/auth.js');
 // const messagesRouter = require('./routes/messages'); // Uncomment and fix if needed
-// const { auth, adminOnly } = require('./middleware/auth'); // Uncomment and fix if needed
 
 const app = express();
 
@@ -53,7 +53,7 @@ app.use('/api/news', newsRouter);
 app.use('/api/contact', contactRouter);
 app.use('/admin', adminRouter);
 app.use('/', mainRouter);
-// app.use('/admin/messages', auth, adminOnly, messagesRouter); // Uncomment and fix if needed
+
 
 // HTML routes
 app.get('/', (req, res) => {

@@ -1,13 +1,14 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const User = require('./models/User');
+const User = require('./models/User.js');
 
+// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('Connected to MongoDB');
-    createAdminUser();
-  })
-  .catch(err => console.error('MongoDB connection error:', err));
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+  });
 
 async function createAdminUser() {
   try {
@@ -15,13 +16,13 @@ async function createAdminUser() {
     
     if (!adminExists) {
       const admin = new User({
-        username: 'ritesh',
-        password: 'nick0912', // Change this in production!
+        username: 'admin',
+        password: 'admin123', // Change this in production!
         role: 'admin'
       });
       
       await admin.save();
-      console.log('Admin user created:', admin);
+      console.log('Admin user created successfully');
     } else {
       console.log('Admin user already exists');
     }
@@ -33,11 +34,4 @@ async function createAdminUser() {
   }
 }
 
-// Add this to your Express app setup
-app.use((req, res, next) => {
-  res.setHeader(
-      'Content-Security-Policy',
-      "script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'"
-  );
-  next();
-});
+createAdminUser();

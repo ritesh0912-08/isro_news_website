@@ -1,7 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const path = require('path');
-const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const News = require('../models/news.js');
 const User = require('../models/User.js');
@@ -10,22 +9,39 @@ const { auth, adminOnly } = require('../middleware/auth.js');
 
 const router = express.Router();
 
-router.use(cookieParser());
 router.use((req, res, next) => {
     console.log(`${req.method} ${req.originalUrl}`);
     next();
 });
 
+// Serve login page - this should be before auth middleware
+router.get('/login', (req, res) => {
+    // If user is already logged in, redirect to admin dashboard
+    if (req.cookies.token) {
+        return res.redirect('/admin');
+    }
+    res.sendFile(path.join(__dirname, '../views', 'login.html'));
+});
+
 // Login route
 router.post('/login', async (req, res) => {
     try {
+        console.log('Login attempt:', req.body);
         const { username, password } = req.body;
         const user = await User.findOne({ username });
         
-        if (!user || !(await user.comparePassword(password))) {
+        if (!user) {
+            console.log('User not found:', username);
             return res.status(401).json({ message: 'Invalid credentials' });
         }
         
+        const isMatch = await user.comparePassword(password);
+        if (!isMatch) {
+            console.log('Invalid password for user:', username);
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+        
+        console.log('Login successful for user:', username);
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
             expiresIn: '8h'
         });
@@ -33,11 +49,27 @@ router.post('/login', async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
             maxAge: 8 * 60 * 60 * 1000 // 8 hours
         }).json({ message: 'Login successful' });
     } catch (error) {
+        console.error('Login error:', error);
         res.status(500).json({ message: 'Server error' });
     }
+});
+
+// Logout route
+router.get('/logout', (req, res) => {
+    res.clearCookie('token').redirect('/admin/login');
+});
+
+// Protect all admin routes
+router.use(auth);
+router.use(adminOnly);
+
+// Admin dashboard
+router.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views', 'admin.html'));
 });
 
 router.get('/messages', auth, adminOnly, async (req, res) => {
@@ -58,20 +90,6 @@ router.get('/api/messages', auth, adminOnly, async (req, res) => {
 router.get('/settings', (req, res) => {
     res.sendFile(path.join(__dirname, '../views', 'settings.html'));
 });
-
-// Logout route
-router.get('/logout', (req, res) => {
-    res.clearCookie('token').redirect('/admin/login');
-});
-
-// Serve login page
-router.get('/login', (req, res) => {
-    res.sendFile('login.html', { root: './views' });
-});
-
-// Protect all admin routes
-router.use(auth);
-router.use(adminOnly);
 
 // Delete news endpoint
 router.delete('/news/:id', async (req, res) => {
@@ -112,11 +130,6 @@ router.delete('/news/:id', async (req, res) => {
             error: error.message
         });
     }
-});
-
-// Serve admin dashboard
-router.get('/', (req, res) => {
-    res.sendFile('admin.html', { root: './views' });
 });
 
 // Add new news
