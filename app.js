@@ -37,7 +37,10 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-        "img-src": ["'self'", "data:", "*"]  // Allow images from any source
+        "img-src": ["'self'", "data:", "*"],  // Allow images from any source
+        "frame-src": ["'self'", "https://www.google.com", "https://*.google.com"],  // Allow iframes from Google
+        "script-src": ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],  // Allow scripts from CDN
+        "style-src": ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"]  // Allow styles from CDN
       }
     }
   })
@@ -107,6 +110,10 @@ app.get('/admin/user.html', (req, res) => {
 
 app.get('/admin/Analytics.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'Analytics.html'));
+});
+
+app.get('/admin/messages.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'messages.html'));
 });
 
 // Start server

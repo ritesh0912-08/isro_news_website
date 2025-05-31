@@ -6,6 +6,8 @@ const News = require('../models/news.js');
 const User = require('../models/User.js');
 const Contact = require('../models/contact.js');
 const { auth, adminOnly } = require('../middleware/auth.js');
+const multer = require('multer');
+const fs = require('fs');
 
 const router = express.Router();
 
@@ -72,18 +74,55 @@ router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../views', 'admin.html'));
 });
 
+// Messages page route
 router.get('/messages', auth, adminOnly, async (req, res) => {
-  try {
-      const messages = await Contact.find().sort({ createdAt: -1 });
-      res.sendFile(path.join(__dirname, '../views/messages.html'));
-  } catch (error) {
-      res.status(500).json({ error: 'Server error' });
-  }
+    try {
+        res.sendFile(path.join(__dirname, '../views', 'messages.html'));
+    } catch (error) {
+        console.error('Error loading messages page:', error);
+        res.status(500).send('Error loading messages page');
+    }
 });
 
+// Get all messages
 router.get('/api/messages', auth, adminOnly, async (req, res) => {
-  const messages = await Contact.find().sort({ createdAt: -1 });
-  res.json(messages);
+    try {
+        console.log('Fetching messages from database...');
+        const messages = await Contact.find().sort({ createdAt: -1 });
+        console.log('Found messages:', messages);
+        res.json(messages);
+    } catch (error) {
+        console.error('Error fetching messages:', error);
+        res.status(500).json({ error: 'Failed to fetch messages' });
+    }
+});
+
+// Get single message
+router.get('/api/messages/:id', auth, adminOnly, async (req, res) => {
+    try {
+        const message = await Contact.findById(req.params.id);
+        if (!message) {
+            return res.status(404).json({ error: 'Message not found' });
+        }
+        res.json(message);
+    } catch (error) {
+        console.error('Error fetching message:', error);
+        res.status(500).json({ error: 'Failed to fetch message' });
+    }
+});
+
+// Delete message
+router.delete('/api/messages/:id', auth, adminOnly, async (req, res) => {
+    try {
+        const message = await Contact.findByIdAndDelete(req.params.id);
+        if (!message) {
+            return res.status(404).json({ error: 'Message not found' });
+        }
+        res.json({ message: 'Message deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting message:', error);
+        res.status(500).json({ error: 'Failed to delete message' });
+    }
 });
 
 // Settings route
