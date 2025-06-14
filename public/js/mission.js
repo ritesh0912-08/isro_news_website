@@ -12,7 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
             status: "completed",
             year: "2023",
             date: "July 14, 2023",
-            image: "/images/chandrayaan3.jpg"
+            image: "/images/chandrayaan3.jpg",
+            site: "Satish Dhawan Space Centre",
+            details: "Details",
+            googleLink: "https://en.wikipedia.org/wiki/Chandrayaan-3"
+            
         },
         {
             id: 2,
@@ -22,7 +26,9 @@ document.addEventListener('DOMContentLoaded', function() {
             status: "ongoing",
             year: "2023",
             date: "September 2, 2023",
-            image: "/images/adityal1.jpg"
+            image: "/images/adityal1.jpg",
+            details: "Details",
+            googleLink: "https://en.wikipedia.org/wiki/Aditya-L1"
         },
         {
             id: 3,
@@ -32,7 +38,10 @@ document.addEventListener('DOMContentLoaded', function() {
             status: "upcoming",
             year: "2024",
             date: "Q1 2024",
-            image: "/images/gaganyaan.jpg"
+            image: "/images/gaganyaan.jpg",
+            details: "Details",
+            googleLink: "https://en.wikipedia.org/wiki/Gaganyaan"
+
         },
         {
             id: 4,
@@ -42,7 +51,9 @@ document.addEventListener('DOMContentLoaded', function() {
             status: "upcoming",
             year: "2024",
             date: "Early 2024",
-            image: "/images/nisar.jpg"
+            image: "/images/nisar.jpg",
+            details: "Details",
+            googleLink: "https://en.wikipedia.org/wiki/NISAR_(satellite)"
         },
         {
             id: 5,
@@ -52,7 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
             status: "completed",
             year: "2023",
             date: "February 10, 2023",
-            image: "/images/sslv.jpg"
+            image: "/images/sslv.jpg",
+            details: "Details",
+            googleLink: "https://en.wikipedia.org/wiki/SSLV-D2"
         }
     ];
 
@@ -89,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p class="mission-description">${mission.description}</p>
                     <div class="mission-meta">
                         <span>${mission.type}</span>
-                        <a href="/mission-detail.html?id=${mission.id}" class="read-more">Details <i class="fas fa-arrow-right"></i></a>
+                        <a href="${mission.googleLink}" class="read-more">Details <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
             `;

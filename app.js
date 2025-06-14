@@ -11,6 +11,7 @@ const adminRouter = require('./routes/admin.js');
 const mainRouter = require('./routes/main.js');
 const contactRouter = require('./routes/contact.js');
 const { auth, adminOnly } = require('./middleware/auth.js');
+const { initializeNewsScheduler } = require('./services/newsService');
 // const messagesRouter = require('./routes/messages'); // Uncomment and fix if needed
 
 const app = express();
@@ -28,7 +29,11 @@ mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log('Connected to MongoDB'))
+.then(() => {
+  console.log('Connected to MongoDB');
+  // Initialize news scheduler after successful database connection
+  initializeNewsScheduler();
+})
 .catch(err => console.error('MongoDB connection error:', err));
 
 // Middleware

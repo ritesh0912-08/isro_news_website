@@ -787,22 +787,30 @@ nav a.active {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    padding: 15px 25px;
-    border-radius: 5px;
+    padding: 8px 15px;
+    border-radius: 4px;
     color: white;
     z-index: 1000;
     animation: slide-in 0.5s ease-out;
-    max-width: 300px;
+    font-size: 13px;
+    max-width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .notification.success {
     background-color: rgba(40, 167, 69, 0.9);
-    border-left: 4px solid #28a745;
+    border-left: 3px solid #28a745;
 }
 
 .notification.error {
     background-color: rgba(220, 53, 69, 0.9);
-    border-left: 4px solid #dc3545;
+    border-left: 3px solid #dc3545;
+}
+
+.notification i {
+    font-size: 14px;
 }
 
 .notification.fade-out {
@@ -2954,14 +2962,17 @@ tr:hover td {
     color: white;
     z-index: 1000;
     animation: slide-in 0.5s ease-out;
+    max-width: 300px;
 }
 
 .notification.success {
     background-color: rgba(40, 167, 69, 0.9);
+    border-left: 4px solid #28a745;
 }
 
 .notification.error {
     background-color: rgba(220, 53, 69, 0.9);
+    border-left: 4px solid #dc3545;
 }
 
 .notification.fade-out {

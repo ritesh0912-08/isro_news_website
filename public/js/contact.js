@@ -72,24 +72,34 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Showing notification:', { message, type });
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
-        notification.textContent = message;
+        notification.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        `;
         document.body.appendChild(notification);
         
         // Add styles if not already in CSS
         notification.style.position = 'fixed';
-        notification.style.top = '20px';
+        notification.style.bottom = '20px';
         notification.style.right = '20px';
-        notification.style.padding = '15px 25px';
-        notification.style.borderRadius = '5px';
+        notification.style.padding = '8px 15px';
+        notification.style.borderRadius = '4px';
         notification.style.zIndex = '1000';
         notification.style.animation = 'slideIn 0.5s ease-out';
+        notification.style.fontSize = '13px';
+        notification.style.maxWidth = '200px';
+        notification.style.display = 'flex';
+        notification.style.alignItems = 'center';
+        notification.style.gap = '8px';
         
         if (type === 'success') {
-            notification.style.backgroundColor = '#4CAF50';
+            notification.style.backgroundColor = 'rgba(40, 167, 69, 0.9)';
             notification.style.color = 'white';
+            notification.style.borderLeft = '3px solid #28a745';
         } else {
-            notification.style.backgroundColor = '#f44336';
+            notification.style.backgroundColor = 'rgba(220, 53, 69, 0.9)';
             notification.style.color = 'white';
+            notification.style.borderLeft = '3px solid #dc3545';
         }
         
         setTimeout(() => {

@@ -23,6 +23,10 @@ const newsSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  isLive: {
+    type: Boolean,
+    default: false
+  },
   createdAt: {
     type: Date,
     default: Date.now

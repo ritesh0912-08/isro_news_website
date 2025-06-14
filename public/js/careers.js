@@ -22,9 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
     applyButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            const position = this.getAttribute('href').split('=')[1];
-            localStorage.setItem('applicationPosition', position);
-            window.location.href = '/apply.html';
+            const link = this.getAttribute('href');
+            window.open(link, '_blank');
         });
     });
 });

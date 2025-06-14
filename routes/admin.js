@@ -2,7 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const mongoose = require('mongoose');
-const News = require('../models/news.js');
+const News = require('../models/News.js');
 const User = require('../models/User.js');
 const Contact = require('../models/contact.js');
 const { auth, adminOnly } = require('../middleware/auth.js');
@@ -211,6 +211,25 @@ router.put('/:id', async (req, res) => {
         res.json({ message: 'News updated successfully', updatedNews });
     } catch (err) {
         res.status(400).json({ message: err.message });
+    }
+});
+
+// Manual news scraping endpoint
+router.post('/scrape-news', auth, adminOnly, async (req, res) => {
+    try {
+        const newsItem = await manuallyScrapeNews();
+        res.json({ 
+            success: true, 
+            message: 'News scraped successfully', 
+            news: newsItem 
+        });
+    } catch (error) {
+        console.error('Error in manual news scraping:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Failed to scrape news', 
+            error: error.message 
+        });
     }
 });
 

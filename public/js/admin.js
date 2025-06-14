@@ -1,16 +1,34 @@
 document.addEventListener('DOMContentLoaded', function() {
     // DOM elements and event listeners
     const addNewsBtn = document.getElementById('addNewsBtn');
+    const scrapeNewsBtn = document.getElementById('scrapeNewsBtn');
     const newsFormContainer = document.getElementById('newsFormContainer');
     const newsForm = document.getElementById('newsForm');
     const cancelBtn = document.getElementById('cancelBtn');
     
-    addNewsBtn.addEventListener('click', showNewsForm);
-    cancelBtn.addEventListener('click', hideNewsForm);
-    newsForm.addEventListener('submit', handleFormSubmit);
+    // Add event listeners only if elements exist
+    if (addNewsBtn) {
+        addNewsBtn.addEventListener('click', showNewsForm);
+    }
     
-    loadNewsItems();
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', hideNewsForm);
+    }
+    
+    if (newsForm) {
+        newsForm.addEventListener('submit', handleFormSubmit);
+    }
+    
+    if (scrapeNewsBtn) {
+        scrapeNewsBtn.addEventListener('click', handleScrapeNews);
+    }
+    
+    // Load news items if we're on a page that needs them
+    if (document.getElementById('newsList')) {
+        loadNewsItems();
+    }
 });
+
 function showNewsForm() {
     const newsFormContainer = document.getElementById('newsFormContainer');
     const newsForm = document.getElementById('newsForm');
@@ -38,21 +56,29 @@ function loadNewsItems() {
         const newsList = document.getElementById('newsList');
         newsList.innerHTML = '';
         
+        if (newsItems.length === 0) {
+            newsList.innerHTML = '<div class="no-news">No news items available</div>';
+            return;
+        }
+        
         newsItems.forEach(news => {
           const newsItem = document.createElement('div');
           newsItem.className = 'news-item';
+          newsItem.setAttribute('data-id', news._id);
           newsItem.innerHTML = `
             <div class="news-item-info">
               <h3>${news.title}</h3>
+              <p class="news-content">${news.content.substring(0, 150)}${news.content.length > 150 ? '...' : ''}</p>
               <div class="news-item-meta">
                 <span><i class="fas fa-tag"></i> ${news.category}</span>
                 <span><i class="fas fa-calendar-alt"></i> ${new Date(news.createdAt).toLocaleDateString()}</span>
-                ${news.isBreaking ? '<span><i class="fas fa-bolt"></i> Breaking</span>' : ''}
+                <span><i class="fas fa-newspaper"></i> ${news.source}</span>
+                ${news.isBreaking ? '<span class="breaking"><i class="fas fa-bolt"></i> Breaking</span>' : ''}
               </div>
             </div>
             <div class="news-item-actions">
-              <button class="edit" data-id="${news._id}"><i class="fas fa-edit"></i></button>
-              <button class="delete" data-id="${news._id}"><i class="fas fa-trash"></i></button>
+              <button class="edit" data-id="${news._id}" title="Edit"><i class="fas fa-edit"></i></button>
+              <button class="delete" data-id="${news._id}" title="Delete"><i class="fas fa-trash"></i></button>
             </div>
           `;
           newsList.appendChild(newsItem);
@@ -71,7 +97,10 @@ function loadNewsItems() {
           });
         });
       })
-      .catch(error => console.error('Error loading news items:', error));
+      .catch(error => {
+        console.error('Error loading news items:', error);
+        showNotification('Failed to load news items', 'error');
+      });
 }
 
 
@@ -225,16 +254,18 @@ function showNotification(message, type = 'success') {
         style.textContent = `
             .notification {
                 position: fixed;
-                top: 20px;
+                bottom: 20px;
                 right: 20px;
-                padding: 15px 25px;
-                border-radius: 5px;
+                padding: 8px 15px;
+                border-radius: 4px;
                 color: white;
                 display: flex;
                 align-items: center;
-                gap: 10px;
+                gap: 8px;
                 z-index: 1000;
                 animation: slideIn 0.5s ease-out;
+                font-size: 13px;
+                max-width: 200px;
             }
             .notification.success {
                 background-color: #4CAF50;
@@ -243,7 +274,7 @@ function showNotification(message, type = 'success') {
                 background-color: #f44336;
             }
             .notification i {
-                font-size: 1.2em;
+                font-size: 14px;
             }
             @keyframes slideIn {
                 from { transform: translateX(100%); opacity: 0; }
@@ -258,4 +289,37 @@ function showNotification(message, type = 'success') {
         notification.style.animation = 'slideOut 0.5s ease-in forwards';
         setTimeout(() => notification.remove(), 500);
     }, 3000);
+}
+
+// Function to handle manual news scraping
+async function handleScrapeNews() {
+    try {
+        const button = document.getElementById('scrapeNewsBtn');
+        button.disabled = true;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Fetching ISRO News...';
+        
+        const response = await fetch('/admin/scrape-news', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification('Successfully fetched latest ISRO news');
+            loadNewsItems(); // Refresh the news list
+        } else {
+            throw new Error(result.message || 'Failed to fetch ISRO news');
+        }
+    } catch (error) {
+        console.error('Error fetching news:', error);
+        showNotification('Failed to fetch ISRO news: ' + error.message, 'error');
+    } finally {
+        const button = document.getElementById('scrapeNewsBtn');
+        button.disabled = false;
+        button.innerHTML = '<i class="fas fa-sync"></i> Fetch ISRO News';
+    }
 }

@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
             description: "India's lunar landing mission with rover",
             image: "/images/chandrayaan3.jpg",
             payload: "Lander and Rover",
-            site: "Satish Dhawan Space Centre"
+            site: "Satish Dhawan Space Centre",
+            details: "Details",
+            googleLink: "https://en.wikipedia.org/wiki/Chandrayaan-3"
         },
         {
             id: 2,
@@ -24,7 +26,9 @@ document.addEventListener('DOMContentLoaded', function() {
             description: "India's first solar observatory mission",
             image: "/images/adityal1.jpg",
             payload: "Solar Observatory",
-            site: "Satish Dhawan Space Centre"
+            site: "Satish Dhawan Space Centre",
+            details: "Details",
+            googleLink: "https://en.wikipedia.org/wiki/Aditya-L1"
         },
         {
             id: 3,
@@ -35,7 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
             description: "Commercial launch for OneWeb constellation",
             image: "/images/oneweb.jpg",
             payload: "36 Communication Satellites",
-            site: "Satish Dhawan Space Centre"
+            site: "Satish Dhawan Space Centre",
+            details: "Details",
+            googleLink: "https://www.isro.gov.in/LVM3M3MissionLandingPage.html"
         },
         {
             id: 4,
@@ -46,7 +52,9 @@ document.addEventListener('DOMContentLoaded', function() {
             description: "Second developmental flight of SSLV",
             image: "/images/sslv.jpg",
             payload: "EOS-07 and 2 small satellites",
-            site: "Satish Dhawan Space Centre"
+            site: "Satish Dhawan Space Centre",
+            details: "Details",
+            googleLink: "https://en.wikipedia.org/wiki/SSLV-D2"
         },
         {
             id: 5,
@@ -57,7 +65,9 @@ document.addEventListener('DOMContentLoaded', function() {
             description: "First test flight for human spaceflight program",
             image: "/images/gaganyaan.jpg",
             payload: "Crew Module",
-            site: "Satish Dhawan Space Centre"
+            site: "Satish Dhawan Space Centre",
+            details: "Details",
+            googleLink: "https://en.wikipedia.org/wiki/Gaganyaan"
         }
     ];
 
@@ -220,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p class="launch-description">${launch.description}</p>
                     <div class="launch-meta">
                         <span>${launch.vehicle.toUpperCase()}</span>
-                        <a href="/launch-detail.html?id=${launch.id}" class="read-more">Details <i class="fas fa-arrow-right"></i></a>
+                        <a href="${launch.googleLink}" class="read-more"> Deails <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
             `;
